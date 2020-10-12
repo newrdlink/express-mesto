@@ -1,0 +1,19 @@
+{
+  "name": "express-mesto",
+  "version": "1.0.0",
+  "description": "Проектная работа 12",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newrdlink/express-mesto.git"
+  },
+  "author": "Roman Didukh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newrdlink/express-mesto/issues"
+  },
+  "homepage": "https://github.com/newrdlink/express-mesto#readme"
+}
