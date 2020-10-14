@@ -6,6 +6,7 @@ const jsonUsersData = path.join(__dirname, '..', 'data', 'users.json')
 router.get('/', (req, res) => {
   readFile(jsonUsersData)
     .then(usersData => res.send(usersData))
+    .catch((err) => console.log(err))
 })
 
 router.get('/:id', (req, res) => {
