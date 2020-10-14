@@ -16,6 +16,7 @@ router.get('/:id', (req, res) => {
       const userFind = usersData.find(user => user._id === id)
         return userFind
       })
+    .catch((err) => console.log(err))
     .then(userFind => {
       if(!userFind) {
         return res.status(404).send({ "message": "Нет пользователя с таким id" })
