@@ -6,7 +6,7 @@ const jsonUsersData = path.join(__dirname, '..', 'data', 'users.json')
 router.get('/', (req, res) => {
   readFile(jsonUsersData)
     .then(usersData => res.send(usersData))
-    .catch((err) => console.log(err))
+    .catch(res.status(500).send({message: 'Ошибка чтения файла'}))
 })
 
 router.get('/:id', (req, res) => {
@@ -16,14 +16,14 @@ router.get('/:id', (req, res) => {
       const userFind = usersData.find(user => user._id === id)
         return userFind
       })
-    .catch((err) => console.log(err))
+    .catch(res.status(500).send({message: 'Ошибка чтения файла'}))
     .then(userFind => {
       if(!userFind) {
         return res.status(404).send({ "message": "Нет пользователя с таким id" })
       }
       res.send(userFind)
     })
-    .catch((err) => console.log(err))
+    .catch(res.status(500).send({message: 'Ошибка чтения файла'}))
 })
 
 

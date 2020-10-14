@@ -7,10 +7,7 @@ const jsonCardsData = path.join(__dirname, '..', 'data', 'cards.json')
 router.get('/', (req, res) => {
   readFile(jsonCardsData)
     .then(cardsData => res.send(cardsData))
-})
-
-router.get('*', (req, res) => {
-  res.status(404).send({ "message": "Запрашиваемый ресурс не найден" })
+    .catch(res.status(500).send({message: 'Ошибка чтения файла'}))
 })
 
 module.exports = router;
