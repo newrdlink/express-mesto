@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
       })
     .then(userFind => {
       if(!userFind) {
-        return res.send(`Такого юзера ${id} которого нет`)
+        return res.status(404).send({ "message": "Нет пользователя с таким id" })
       }
       res.send(userFind)
     })
