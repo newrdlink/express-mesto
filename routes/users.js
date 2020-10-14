@@ -5,8 +5,7 @@ const jsonUsersData = path.join(__dirname, '..', 'data', 'users.json')
 
 router.get('/', (req, res) => {
   readFile(jsonUsersData)
-    .then(usersData => {
-      res.send(usersData)})
+    .then(usersData => res.send(usersData))
 })
 
 router.get('/:id', (req, res) => {
@@ -22,14 +21,9 @@ router.get('/:id', (req, res) => {
       }
       res.send(userFind)
     })
-    .catch((err) => {
-      console.log(err)
-    })
+    .catch((err) => console.log(err))
 })
 
-router.get('*', (req, res) => {
-  const { '0': badPath } = req.params
-  res.send(`К сожалению, введенный путь: ${badPath} - не допустимый`)
-})
+
 
 module.exports = router;
