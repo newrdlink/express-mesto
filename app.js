@@ -8,6 +8,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 
 const { PORT = 3000 } = process.env;
@@ -19,5 +20,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(router);
 // start server
 app.listen(PORT, () => {
-  console.log(`Наш сервер слушает ${PORT} порт`);
+  console.log(`Наш сервер пытается слушать ${PORT} порт`);
 });
