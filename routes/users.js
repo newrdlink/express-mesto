@@ -3,9 +3,29 @@ const router = require('express').Router();
 
 const User = require('../models/user');
 
+// GET users
+router.get('/', (req, res) => {
+  User.find({})
+    .then((users) => res.send(users))
+    .catch(() => res.status(500).send({ message: 'Похоже у нас ошибка...' }));
+});
+// GET user
+router.get('/:userId', (req, res) => {
+  const { userId } = req.params;
+  User.findById(userId)
+    .orFail(() => {
+      const error = new Error('Почему-то мы не нашли вас...');
+      error.statusCode = 404;
+      throw error;
+    })
+    .then((user) => {
+      res.send(user);
+    })
+    .catch(() => res.send({ message: 'Ошибка, извините...' }));
+});
+// create user
 router.post('/', (req, res) => {
   const { name, about, avatar } = req.body;
-  console.log(name);
   User.create({ name, about, avatar })
     .then((newUser) => res.send(newUser))
     .catch(() => res.status(500).send({ message: 'Произошла ошибка2' }));
@@ -36,6 +56,5 @@ router.post('/', (req, res) => {
 //     })
 //     .catch(() => res.status(500).send({ message: 'Ошибка чтения файла' }));
 // });
-
 
 module.exports = router;
