@@ -19,7 +19,7 @@ const userSchema = new Schema({
     required: [true, 'Ссылка на аватар необходима'],
     validate: {
       validator(v) {
-        return /\d{3}-\d{3}-\d{4}/.test(v);
+        return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v);
       },
       message: (props) => `${props.value} не совсем валидная ссылка на аватар`,
     },
