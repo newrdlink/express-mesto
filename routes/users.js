@@ -21,7 +21,7 @@ router.get('/:userId', (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch(() => res.send({ message: 'Ошибка, извините...' }));
+    .catch((error) => (error ? res.send({ message: ` Пользователь ${error.value} не найден` }) : res.send({ message: 'Ошибка, извините...' })));
 });
 // create user
 router.post('/', (req, res) => {
