@@ -12,12 +12,12 @@ const cardSchema = new Schema({
   link: {
     type: String,
     required: true,
-    validate: {
-      validator(v) {
-        return !/Этого в ссылке не должно быть/.test(v);
-      },
-      message: (props) => `${props.value} не совсем валидная ссылка`,
-    },
+    // validate: {
+    //   validator(v) {
+    //     return !/Этого в ссылке не должно быть/.test(v);
+    //   },
+    //   message: (props) => `${props.value} не совсем валидная ссылка`,
+    // },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
@@ -28,7 +28,7 @@ const cardSchema = new Schema({
     type: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'user',
-      required: true,
+      // required: true,
     }],
     default: [],
 
@@ -40,4 +40,4 @@ const cardSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('user', cardSchema);
+module.exports = mongoose.model('card', cardSchema);
