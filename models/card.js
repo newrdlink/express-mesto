@@ -16,7 +16,7 @@ const cardSchema = new Schema({
       validator(v) {
         return !/Этого в ссылке не должно быть/.test(v);
       },
-      message: 'Вы ввели не корректную ссылку',
+      message: (props) => `${props.value} не совсем валидная ссылка`,
     },
   },
   owner: {
