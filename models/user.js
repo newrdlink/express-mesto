@@ -12,6 +12,7 @@ const userSchema = new Schema({
   about: {
     type: String,
     required: true,
+    minlength: 3,
   },
   avatar: {
     type: String,

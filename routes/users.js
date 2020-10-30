@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 // const path = require('path');
 
 const User = require('../models/user');
@@ -9,6 +10,7 @@ router.get('/', (req, res) => {
     .then((users) => res.send(users))
     .catch(() => res.status(500).send({ message: 'Похоже у нас ошибка...' }));
 });
+
 // GET user
 router.get('/:userId', (req, res) => {
   const { userId } = req.params;
@@ -23,12 +25,19 @@ router.get('/:userId', (req, res) => {
     })
     .catch((error) => (error ? res.send({ message: ` Пользователь ${error.value} не найден` }) : res.send({ message: 'Ошибка, извините...' })));
 });
+
 // create user
 router.post('/', (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((newUser) => res.send(newUser))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка2' }));
+    .catch((error) => (
+      error.name === 'ValidationError' ? res.send({ message: `Что-то не так с валидацией - ${error._message}` }) : res.send({ message: 'Ошибка на сервере' })
+    ));
+
+  // console.log(`1 ${error.errors.about}`))
+  // .catch((error) => res.status(500).send(error.errors.name));
+  // .catch(() => res.status(500).send({ message: 'Произошла ошибка2' }));
 });
 // const readFile = require('../utils/read-file');
 
