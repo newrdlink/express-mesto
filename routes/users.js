@@ -37,10 +37,11 @@ router.post('/', (req, res) => {
       const objErrors = error.errors;
       const objErrorsName = Object.keys(objErrors);
       const objErr = objErrorsName.reduce((object, item) => {
+        // eslint-disable-next-line no-param-reassign
         object[item] = objErrors[item].message;
         return object;
       }, {});
-      console.log(objErr);
+      res.status(501).send(objErr);
     });
   //  .catch((error) => console.log(error.errors['avatar'].message))
   // .catch((error) => (
