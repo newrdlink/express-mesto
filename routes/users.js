@@ -23,7 +23,9 @@ router.get('/:userId', (req, res) => {
     .then((user) => {
       res.send(user);
     })
-    .catch((error) => (error ? res.send({ message: ` Пользователь ${error.value} не найден` }) : res.send({ message: 'Ошибка, извините...' })));
+    .catch((error) => (error
+      ? res.send({ message: ` Пользователь ${error.value} не найден` })
+      : res.send({ message: 'Ошибка, извините...' })));
 });
 
 // create user
@@ -31,13 +33,21 @@ router.post('/', (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((newUser) => res.send(newUser))
-    .catch((error) => (
-      error.name === 'ValidationError' ? res.send({ message: `Что-то не так с валидацией - ${error._message}` }) : res.send({ message: 'Ошибка на сервере' })
-    ));
-
-  // console.log(`1 ${error.errors.about}`))
-  // .catch((error) => res.status(500).send(error.errors.name));
-  // .catch(() => res.status(500).send({ message: 'Произошла ошибка2' }));
+    .catch((error) => {
+      const objErrors = error.errors;
+      const objErrorsName = Object.keys(objErrors);
+      const objErr = objErrorsName.reduce((object, item) => {
+        object[item] = objErrors[item].message;
+        return object;
+      }, {});
+      console.log(objErr);
+    });
+  //  .catch((error) => console.log(error.errors['avatar'].message))
+  // .catch((error) => (
+  //   error.name === 'ValidationError'
+  //     ? res.send({ message: `Что-то не так с валидацией - ${error._message}` })
+  //     : res.send({ message: 'Ошибка на сервере' })
+  // ));
 });
 // const readFile = require('../utils/read-file');
 
