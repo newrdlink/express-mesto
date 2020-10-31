@@ -21,7 +21,7 @@ const userSchema = new Schema({
       validator(v) {
         return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v);
       },
-      message: (props) => `${props.value} не совсем валидная ссылка на аватар`,
+      message: (props) => `${props.value} - не совсем валидная ссылка на аватар`,
     },
   },
 });

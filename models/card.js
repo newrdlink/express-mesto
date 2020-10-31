@@ -5,19 +5,19 @@ const cardSchema = new Schema({
 
   name: {
     type: String,
-    required: true,
+    required: [true, 'Заполните это поле, пожалуйста'],
     minlength: 2,
     maxlength: 30,
   },
   link: {
     type: String,
-    required: true,
-    // validate: {
-    //   validator(v) {
-    //     return !/Этого в ссылке не должно быть/.test(v);
-    //   },
-    //   message: (props) => `${props.value} не совсем валидная ссылка`,
-    // },
+    required: [true, 'Ссылка на аватар необходима'],
+    validate: {
+      validator(v) {
+        return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(v);
+      },
+      message: (props) => `${props.value} - не совсем валидная ссылка на аватар`,
+    },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
