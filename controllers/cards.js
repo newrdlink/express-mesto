@@ -55,4 +55,10 @@ const deleteLike = (req, res) => {
     .catch((error) => res.send(error));
 };
 
-module.exports = { getCards, createCard, deleteCard, addLike, deleteLike };
+module.exports = {
+  getCards,
+  createCard,
+  deleteCard,
+  addLike,
+  deleteLike,
+};

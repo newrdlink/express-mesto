@@ -11,7 +11,7 @@ const getUser = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
     .orFail(() => {
-      const error = new Error('Я тут');
+      const error = new Error('');
       error.statusCode = 404;
       throw error;
     })
