@@ -10,15 +10,23 @@ const getUsers = (req, res) => {
 const getUser = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
+    .orFail(() => {
+      const error = new Error('Я тут');
+      error.statusCode = 404;
+      throw error;
+    })
     .then((user) => {
       res.send(user);
     })
     .catch((error) => {
-      console.log(error.name)
-    })
-  // .catch((error) => (error
-  //   ? res.status(404).send({ message: ` Пользователь ${error.value} не найден` })
-  //   : res.status(400).send({ message: 'Ошибка, извините...' })));
+      if (error.kind === 'ObjectId') {
+        return res.status(400).send({ message: 'Не валидный ID' });
+      }
+      if (error.statusCode === 404) {
+        return res.status(404).send({ message: 'Нет такого пользователя' });
+      }
+      return res.status(500).send(error);
+    });
 };
 
 const createUser = (req, res) => {
@@ -27,7 +35,7 @@ const createUser = (req, res) => {
     .then((newUser) => res.send(newUser))
     .catch((error) => {
       const objErr = createError(error);
-      res.status(501).send(objErr);
+      res.status(400).send(objErr);
     });
 };
 

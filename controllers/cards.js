@@ -14,7 +14,7 @@ const createCard = (req, res) => {
     .then((newCard) => res.send(newCard))
     .catch((error) => {
       const objErr = createError(error);
-      res.status(501).send(objErr);
+      res.status(400).send(objErr);
     });
 };
 
@@ -25,4 +25,34 @@ const deleteCard = (req, res) => {
     .catch((error) => res.send(error));
 };
 
-module.exports = { getCards, createCard, deleteCard };
+const addLike = (req, res) => {
+  const { cardId } = req.params;
+  const { _id } = req.user._id;
+  Card.findByIdAndUpdate(
+    cardId,
+    { $addToSet: { likes: _id } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((card) => res.send(card))
+    .catch((error) => res.send(error));
+};
+
+const deleteLike = (req, res) => {
+  const { cardId } = req.params;
+  const { _id } = req.user._id;
+  Card.findByIdAndUpdate(
+    cardId,
+    { $pull: { likes: _id } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((card) => res.send(card))
+    .catch((error) => res.send(error));
+};
+
+module.exports = { getCards, createCard, deleteCard, addLike, deleteLike };
