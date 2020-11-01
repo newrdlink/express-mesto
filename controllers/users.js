@@ -39,4 +39,40 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { getUsers, getUser, createUser };
+const updatePrifile = (req, res) => {
+  const { _id } = req.user._id;
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(
+    _id,
+    { $addToSet: { name, about } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((user) => res.send(user))
+    .catch((error) => res.send(error));
+};
+
+const updateAvatar = (req, res) => {
+  const { _id } = req.user._id;
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(
+    _id,
+    { $addToSet: { avatar } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+    .then((user) => res.send(user))
+    .catch((error) => res.send(error));
+};
+
+module.exports = {
+  getUsers,
+  getUser,
+  createUser,
+  updatePrifile,
+  updateAvatar,
+};
