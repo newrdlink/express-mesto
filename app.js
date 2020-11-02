@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 const path = require('path');
 
+const helmet = require('helmet');
+
 const { PORT = 3000 } = process.env;
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -17,6 +19,8 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+// sets the Content-Security-Policy header
+app.use(helmet.contentSecurityPolicy());
 
 app.use((req, res, next) => {
   req.user = {
