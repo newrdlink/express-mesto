@@ -65,8 +65,22 @@ const updateAvatar = (req, res) => {
       runValidators: true,
     },
   )
+    .orFail(() => {
+      const error = new Error('');
+      error.statusCode = 404;
+      throw error;
+    })
     .then((user) => res.send(user))
-    .catch((error) => res.send(error));
+    .catch((error) => {
+      if (error.statusCode === 404) {
+        return res.status(404).send({ message: 'Нет такого пользователя' });
+      }
+      if (error._message === 'Validation failed') {
+        const objErr = createError(error);
+        return res.status(400).send(objErr);
+      }
+      return res.status(500).send(error);
+    });
 };
 
 module.exports = {

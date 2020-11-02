@@ -12,18 +12,11 @@
   },
   "rules": {
     "no-underscore-dangle": [
-      "off",
+      "error",
       {
         "allow": [
-          "off",
-          "_id"
-        ]
-      },
-      "off",
-      {
-        "allow": [
-          "off",
-          ""
+          "_id",
+          "_message"
         ]
       }
     ]
